@@ -1,5 +1,5 @@
 const app = require('../app')
-const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRENT } = require('../config/error')
+const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRENT, UNAUTHORIZATION, OPERATION_IS_NOT_ALLOWED } = require('../config/error')
 
 
 app.on('error', (error, ctx) => {
@@ -22,6 +22,12 @@ app.on('error', (error, ctx) => {
     case PASSWORD_IS_INCORRENT:
       code = -1004
       message = '密码错误，请重新输入！'
+    case UNAUTHORIZATION:
+      code = -1005
+      message = '无效的token或token已过期！'
+    case OPERATION_IS_NOT_ALLOWED:
+      code = -2001
+      message = '没有操作权限！'
   }
 
   ctx.body = { code, message }
